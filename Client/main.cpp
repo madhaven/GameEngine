@@ -81,8 +81,8 @@ int WINAPI wWinMain(const HINSTANCE hInstance, HINSTANCE, PWSTR, const int nShow
 		graphics->WriteText(L"FPS: "+ms, rect);
 		player.Render(graphics);
 		graphics->EndDraw();
-		m_end_time = std::chrono::system_clock::now();
 
+		m_end_time = std::chrono::system_clock::now();
 		ms = std::to_wstring(1000/std::chrono::duration_cast<std::chrono::milliseconds>(m_end_time - m_start_time).count());
 	}
 	delete graphics; // explicitly delete graphics since it's allocated in heap memory

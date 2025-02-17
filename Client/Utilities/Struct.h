@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-struct PlayerDirection
+struct PlayerKeyDirection
 {
     bool up;
     bool down;

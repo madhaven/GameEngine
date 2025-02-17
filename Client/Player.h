@@ -2,7 +2,6 @@
 
 #include <windows.h>
 #include "Bullet.h"
-#include "Utilities/Struct.h"
 
 class Player : public GameObject
 {
@@ -12,12 +11,16 @@ class Player : public GameObject
 	RECT playable_area_;
 
     // Consider this as time/ticks/seconds
-    int frame_ = 0;
+    D2D1_POINT_2F frame_;
 
     // this needs to be calculated when user presses arrow keys.
     // this will be a constant value. Also, this needs x and y component
-    float acceleration_ = 0.3F;
-    PlayerDirection direction_;
+    float acceleration_magnitude = 0.1f;
+    D2D1_POINT_2F acceleration_;
+    D2D1_POINT_2F deceleration_;
+	D2D1_POINT_2F velocity_;
+	float max_velocity_ = 0.5;
+    D2D1_POINT_2F key_direction_;
 
 public:
 
@@ -42,6 +45,8 @@ public:
 	void ResetBullets();
 
     void CalculateAcceleration();
+
+    void CalculateDeceleration();
 
     void CalculateVelocity();
 
