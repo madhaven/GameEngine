@@ -16,8 +16,10 @@ void Player::Init(const HWND handle)
 	GetClientRect(handle, &playable_area_);
 
 	srand(time(nullptr));
-	position.x = rand() % playable_area_.right;
-	position.y = rand() % playable_area_.bottom;
+	// position.x = rand() % playable_area_.right;
+	position.x = playable_area_.right/2;
+	// position.y = rand() % playable_area_.bottom;
+	position.y = playable_area_.bottom/2;
     prev_position.x = position.x;
     prev_position.y = position.y;
     frame_.x = 0;
@@ -119,7 +121,7 @@ void Player::Update()
     {
         frame_.x--;
     }
-    else if (frame_.x <= 50)
+    else if (frame_.x <= 50 && key_direction_.x != 0)
     {
         frame_.x++;
     }
@@ -128,7 +130,7 @@ void Player::Update()
     {
         frame_.y--;
     }
-    else if (frame_.y <= 50)
+    else if (frame_.y <= 50 && key_direction_.y != 0)
     {
         frame_.y++;
     }
@@ -157,8 +159,8 @@ void Player::CalculateAcceleration()
     }
 
     const auto angle = atan2f(key_direction_.y, key_direction_.x);
-    acceleration_.x = cosf(angle) * acceleration_magnitude * key_direction_.x;
-    acceleration_.y = sinf(angle) * acceleration_magnitude * key_direction_.y;
+    acceleration_.x = cosf(angle) * acceleration_magnitude;
+    acceleration_.y = sinf(angle) * acceleration_magnitude;
 }
 
 void Player::CalculateDeceleration()
@@ -176,6 +178,15 @@ void Player::CalculateDeceleration()
 
 void Player::CalculateVelocity()
 {
+    if (frame_.x == 0)
+    {
+        velocity_.x = 0;
+    }
+
+    if (frame_.y == 0)
+    {
+        velocity_.y = 0;
+    }
     const auto v_x = acceleration_.x * 1 + velocity_.x;
     const auto v_y = acceleration_.y * 1 + velocity_.y;
     const auto mag = sqrtf(powf(v_x, 2) + powf(v_y, 2));
@@ -184,11 +195,37 @@ void Player::CalculateVelocity()
         velocity_.x = v_x;
         velocity_.y = v_y;
     }
+    else
+    {
+        auto angle = atan2f(v_y, v_x);
+        velocity_.x = cos(angle) * max_velocity_;
+        velocity_.y = sin(angle) * max_velocity_;
+    }
 }
 
 void Player::CalculatePosition()
 {
     position.x = velocity_.x * frame_.x + position.x;
     position.y = velocity_.y * frame_.y + position.y;
+}
+
+void Player::WriteStats(Graphics* graphics)
+{
+    D2D1_RECT_F rect = { 10, 100, 200, 50 };
+    graphics->WriteText(L"pos.x:" + std::to_wstring(position.x), rect);
+    rect = { 10, 150, 200, 50 };
+    graphics->WriteText(L"pos.y:" + std::to_wstring(position.y), rect);
+    rect = { 10, 200, 200, 50 };
+    graphics->WriteText(L"acc.x:" + std::to_wstring(acceleration_.x), rect);
+    rect = { 10, 250, 200, 50 };
+    graphics->WriteText(L"acc.y:" + std::to_wstring(acceleration_.y), rect);
+    rect = { 10, 300, 200, 50 };
+    graphics->WriteText(L"vel.x:" + std::to_wstring(velocity_.x), rect);
+    rect = { 10, 350, 200, 50 };
+    graphics->WriteText(L"vel.y:" + std::to_wstring(velocity_.y), rect);
+    rect = { 10, 400, 200, 50 };
+    graphics->WriteText(L"fra.x:" + std::to_wstring(frame_.x), rect);
+    rect = { 10, 450, 200, 50 };
+    graphics->WriteText(L"fra.y:" + std::to_wstring(frame_.y), rect);
 }
 

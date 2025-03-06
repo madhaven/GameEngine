@@ -79,8 +79,10 @@ int WINAPI wWinMain(const HINSTANCE hInstance, HINSTANCE, PWSTR, const int nShow
 		graphics->ClearScreen(0, 0, 0);
 		D2D1_RECT_F rect = { 0, 0, 100, 50 };
 		graphics->WriteText(L"FPS: "+ms, rect);
+	    player.WriteStats(graphics);
 		player.Render(graphics);
 		graphics->EndDraw();
+	    // Sleep(500);
 
 		m_end_time = std::chrono::system_clock::now();
 		ms = std::to_wstring(1000/std::chrono::duration_cast<std::chrono::milliseconds>(m_end_time - m_start_time).count());

@@ -1,5 +1,5 @@
 #pragma once
- 
+
 #include "Graphics.h"
 #include "Player.h"
 
@@ -36,7 +36,7 @@ bool Graphics::Init(HWND hwnd)
 	if (result != S_OK)	return false;
 	else
 	{
-		writeFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		writeFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 		writeFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	}
 	RECT playableArea;

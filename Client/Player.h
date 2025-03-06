@@ -51,4 +51,6 @@ public:
     void CalculateVelocity();
 
     void CalculatePosition();
+
+    void WriteStats(Graphics* graphics);
 };
