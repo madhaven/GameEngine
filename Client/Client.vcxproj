@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Utilities\Struct.cpp" />
+    <ClCompile Include="Utilities\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Utilities\Struct.h" />
+    <ClInclude Include="Utilities\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
