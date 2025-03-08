@@ -1,6 +1,28 @@
 #include "Bullet.h"
 #include <math.h>
 
+Bullet::Bullet()
+{
+	this->isAlive = false;
+	this->velocity = {0, 0};
+	this->firePosition = {0, 0};
+	this->position = {0, 0};
+	this->color = D2D1::ColorF(1.0f, 1.0f, 0.0f);
+}
+
+Bullet::Bullet(RECT playableArea, Vector2D firedPosition, Vector2D target)
+{
+	this->playableArea = playableArea;
+	this->isAlive = true;
+	this->firePosition = firedPosition;
+	this->position = firedPosition;
+	this->color = D2D1::ColorF(1.0f, 1.0f, 0.0f);
+
+	auto angle_vec = target - firePosition;
+	auto angle_rad = atan2f(angle_vec.y, angle_vec.x);
+	this->velocity = Vector2D(speed * cos(angle_rad), speed * sin(angle_rad));
+}
+
 void Bullet::Render(Graphics* graphics)
 {
 	if (!isAlive) { return; }
@@ -10,12 +32,11 @@ void Bullet::Render(Graphics* graphics)
 void Bullet::Update()
 {
 	if (!isAlive) { return; }
-	
-	if (position.x > playableArea.right) { isAlive = FALSE; }
-	if (position.y > playableArea.bottom) { isAlive = FALSE; }
-	if (position.x < 0) { isAlive = FALSE; }
-	if (position.y < 0) { isAlive = FALSE; }
 
-	position.x += cos(angle) * speed;
-	position.y += sin(angle) * speed;
+	velocity *= 1 - drag;
+	position += velocity;
+	
+	if (position.x > playableArea.right || position.y > playableArea.bottom
+		|| position.x < 0 || position.y < 0)
+	{ isAlive = FALSE; }
 }

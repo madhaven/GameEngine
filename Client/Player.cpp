@@ -35,15 +35,7 @@ void Player::Render(Graphics* graphics)
 void Player::Fire()
 {
 	trigger_released_ = FALSE;
-	Bullet bullet;
-	bullet.isAlive = TRUE;
-	bullet.aimPostion = {aim_pos_vec.x, aim_pos_vec.y};
-	bullet.firePosition = {position_vec.x, position_vec.y};
-	bullet.position = {position_vec.x, position_vec.y};
-	auto angle = aim_pos_vec - position_vec;
-	bullet.angle = atan2f(angle.y, angle.x);
-	bullet.playableArea = playable_area_;
-	bullet.color = D2D1::ColorF(1.0f, 1.0f, 0.0f);
+	Bullet bullet = Bullet(playable_area_, position_vec, aim_pos_vec);
 	GetNextBullet(bullet);
 }
 

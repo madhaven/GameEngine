@@ -1,19 +1,23 @@
 #pragma once
 #include "Interfaces.h"
+#include "Utilities/Vector2D.h"
 
 class Bullet : public GameObject
 {
-	FLOAT speed = 30;
+	float speed = 30.0f;
 
 public:
 	BOOL isAlive = FALSE;
-	D2D1_POINT_2F firePosition;
-	D2D1_POINT_2F aimPostion;
-	FLOAT angle = 0;
-	D2D1_POINT_2F position;
+	Vector2D position;
+	Vector2D firePosition;
+	Vector2D velocity;
+	float drag = .0001f;
+	
 	D2D1_COLOR_F color = D2D1::ColorF(1.0f, 0.3f, 0.0f);
 	RECT playableArea = {};
 
+	Bullet();
+	Bullet(RECT playableArea, Vector2D firedPosition, Vector2D target);
 	void Render(Graphics* graphics);
 	void Update();
 };
