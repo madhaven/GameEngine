@@ -6,37 +6,37 @@
 
 class Player : public GameObject
 {
-	Vector2D aim_pos_vec;
-	Vector2D position_vec;
-	Vector2D velocity_vec;
-	Vector2D force_vec;
-	float friction_coef = 0.1f;
-	float force_gain = 1.02f; // the increase in power
-	float terminal_velocity = 0.5;
-	float rotation_deg;
-	
-	D2D1_COLOR_F color_ = D2D1::ColorF(0.0f, 1.0f, 1.0f);
-	BOOL trigger_released_ = TRUE;
-	RECT playable_area_;
+    Vector2D aim_pos_vec;
+    Vector2D position_vec;
+    Vector2D velocity_vec;
+    Vector2D force_vec;
+    float friction_coef = 0.1f;
+    float force_gain = 1.02f; // the increase in power
+    float terminal_velocity = 0.5;
+    float rotation_deg;
+    
+    D2D1_COLOR_F color_ = D2D1::ColorF(0.0f, 1.0f, 1.0f);
+    BOOL trigger_released_ = TRUE;
+    RECT playable_area_;
 
 public:
-	Bullet bullets[5];
+    Bullet bullets[5];
 
-	Player();
+    Player();
 
-	void Init(HWND handle);
+    void Init(HWND handle);
 
-	void Update();
+    void Update();
 
-	void Render(Graphics* graphics);
+    void Render(Graphics* graphics);
 
-	void OnWinEvent(UINT msg, WPARAM w_param, LPARAM l_param);
+    void OnWinEvent(UINT msg, WPARAM w_param, LPARAM l_param);
 
-	bool GetNextBullet(const Bullet& bullet);
+    bool GetNextBullet(const Bullet& bullet);
 
-	void Fire();
+    void Fire();
 
-	void ResetBullets();
+    void ResetBullets();
 
     void WriteStats(Graphics* graphics);
 
