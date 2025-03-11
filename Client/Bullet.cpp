@@ -36,7 +36,15 @@ void Bullet::Update()
 	velocity *= 1 - drag;
 	position += velocity;
 	
-	if (position.x > playableArea.right || position.y > playableArea.bottom
-		|| position.x < 0 || position.y < 0)
-	{ isAlive = FALSE; }
+    if (position.x > playableArea.right
+        || position.y > playableArea.bottom
+        || position.x < 0
+        || position.y < 0)
+    	{ isAlive = FALSE; }
+}
+
+void Bullet::EnforceBoundingBox()
+{
+    if (position.x < playableArea.left || position.x > playableArea.right) { velocity.x *= -1; }
+    if (position.y < playableArea.top || position.y > playableArea.bottom) { velocity.y *= -1; }
 }

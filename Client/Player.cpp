@@ -104,12 +104,42 @@ void Player::OnWinEvent(const UINT msg, const WPARAM w_param, const LPARAM l_par
 	}
 }
 
+void Player::EnforceBoundaries()
+{
+	if (position_vec.x < playable_area_.left)
+	{
+		position_vec.x += 2 * (playable_area_.left - position_vec.x);
+		velocity_vec.x *= -1.3;
+		force_vec.x *= 0.3;
+	}
+	else if (position_vec.x > playable_area_.right)
+	{
+		position_vec.x -= 2 * (position_vec.x - playable_area_.right);
+		velocity_vec.x *= -1.3;
+		force_vec.x *= 0.3;
+	}
+	if (position_vec.y < playable_area_.top)
+	{
+		position_vec.y += 2 * (playable_area_.top - position_vec.y);
+		velocity_vec.y *= -1.3;
+		force_vec.y *= 0.3;
+	}
+	else if (position_vec.y > playable_area_.bottom)
+	{
+		position_vec.y -= 2 * (position_vec.y - playable_area_.bottom);
+		velocity_vec.y *= -1.3;
+		force_vec.y *= 0.3;
+	}
+}
+
 void Player::Update()
 {
 	force_vec *= force_gain;
 	velocity_vec += force_vec;
 	velocity_vec *= 1 - friction_coef;
 	position_vec += velocity_vec;
+
+	EnforceBoundaries();
 
 	for (auto& bullet : bullets)
 	{

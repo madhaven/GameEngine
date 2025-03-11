@@ -39,4 +39,6 @@ public:
 	void ResetBullets();
 
     void WriteStats(Graphics* graphics);
+
+    void EnforceBoundaries();
 };
