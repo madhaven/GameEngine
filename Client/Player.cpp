@@ -6,7 +6,17 @@
 #include <ctime>
 #include <iostream>
 
-Player::Player() {}
+Player::Player()
+{
+    friction_coef = 0.1f;
+    force_gain = 1.02f;
+    terminal_velocity = 0.5;
+    rotation_deg = 0;
+    trigger_released_ = true;
+
+    color_ = D2D1::ColorF(0.0f, 1.0f, 1.0f);
+    playable_area_ = {};
+}
 
 void Player::Init(const HWND handle)
 {

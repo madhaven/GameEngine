@@ -4,17 +4,17 @@
 
 class Bullet : public GameObject
 {
-    float speed = 100.0f;
+    float speed;
 
 public:
-    BOOL isAlive = FALSE;
+    BOOL isAlive;
     Vector2D position;
     Vector2D firePosition;
     Vector2D velocity;
-    float drag = .05f;
+    float drag;
     
-    D2D1_COLOR_F color = D2D1::ColorF(1.0f, 0.3f, 0.0f);
-    RECT playableArea = {};
+    D2D1_COLOR_F color;
+    RECT playableArea;
 
     Bullet();
     Bullet(RECT playableArea, Vector2D firedPosition, Vector2D target);

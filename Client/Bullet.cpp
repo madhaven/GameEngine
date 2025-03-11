@@ -3,14 +3,17 @@
 
 Bullet::Bullet()
 {
+    this->speed = 100.0f;
+    this->drag = .05f;
     this->isAlive = false;
     this->velocity = {0, 0};
     this->firePosition = {0, 0};
     this->position = {0, 0};
-    this->color = D2D1::ColorF(1.0f, 1.0f, 0.0f);
+    this->color = D2D1::ColorF(1.0f, 0.3f, 0.0f);
+    this->playableArea = {};
 }
 
-Bullet::Bullet(RECT playableArea, Vector2D firedPosition, Vector2D target)
+Bullet::Bullet(RECT playableArea, Vector2D firedPosition, Vector2D target) : Bullet()
 {
     this->playableArea = playableArea;
     this->isAlive = true;

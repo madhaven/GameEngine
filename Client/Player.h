@@ -10,13 +10,13 @@ class Player : public GameObject
     Vector2D position_vec;
     Vector2D velocity_vec;
     Vector2D force_vec;
-    float friction_coef = 0.1f;
-    float force_gain = 1.02f; // the increase in power
-    float terminal_velocity = 0.5;
+    float friction_coef;
+    float force_gain; // the increase in power
+    float terminal_velocity;
     float rotation_deg;
     
-    D2D1_COLOR_F color_ = D2D1::ColorF(0.0f, 1.0f, 1.0f);
-    BOOL trigger_released_ = TRUE;
+    D2D1_COLOR_F color_;
+    bool trigger_released_;
     RECT playable_area_;
 
 public:
