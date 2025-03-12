@@ -1,4 +1,5 @@
 ﻿#include "Vector2D.h"
+#include "Force2D.h"
 #include "cmath"
 
 Vector2D::Vector2D()
@@ -19,16 +20,28 @@ Vector2D::Vector2D(const Vector2D& vector)
     this->y = vector.y;
 }
 
+Vector2D Vector2D::normalize() const
+{
+    if (x == .0f && y == .0f) { return *this; }
+    float magnitude = sqrt(x * x + y * y);
+    return {x / magnitude, y / magnitude};
+}
+
 float Vector2D::magnitude() const
 {
     if (this->x == 0 && this->y == 0)
         return 0;
-    return std::sqrt(x * x + y * y);
+    return sqrt(x * x + y * y);
 }
 
-Vector2D Vector2D::operator+(const Vector2D& rhs) const
+bool Vector2D::operator==(const Vector2D& rhs) const
 {
-    return {this->x + rhs.x, this->y + rhs.y};
+    return this->x == rhs.x && this->y == rhs.y;
+}
+
+bool Vector2D::operator!=(const Vector2D& rhs) const
+{
+    return this->x != rhs.x || this->y != rhs.y;
 }
 
 Vector2D Vector2D::operator+(const float rhs) const
@@ -36,11 +49,14 @@ Vector2D Vector2D::operator+(const float rhs) const
     return {this->x + rhs, this->y + rhs};
 }
 
-Vector2D Vector2D::operator+=(const Vector2D& rhs)
+Vector2D Vector2D::operator+(const Vector2D& rhs) const
 {
-    this->x += rhs.x;
-    this->y += rhs.y;
-    return *this;
+    return {this->x + rhs.x, this->y + rhs.y};
+}
+
+Vector2D Vector2D::operator+(Force2D& force) const
+{
+    return { x + force.force_vec.x, y + force.force_vec.y };
 }
 
 Vector2D Vector2D::operator+=(const float rhs)
@@ -50,14 +66,40 @@ Vector2D Vector2D::operator+=(const float rhs)
     return *this;
 }
 
-Vector2D Vector2D::operator-(const Vector2D& rhs) const
+Vector2D Vector2D::operator+=(const Vector2D& rhs)
 {
-    return {this->x - rhs.x, this->y - rhs.y};
+    this->x += rhs.x;
+    this->y += rhs.y;
+    return *this;
+}
+
+Vector2D Vector2D::operator+=(const Force2D& force)
+{
+    x += force.force_vec.x;
+    y += force.force_vec.y;
+    return *this;
 }
 
 Vector2D Vector2D::operator-(const float rhs) const
 {
     return {this->x + rhs, this->y + rhs};
+}
+
+Vector2D Vector2D::operator-(const Vector2D& rhs) const
+{
+    return {this->x - rhs.x, this->y - rhs.y};
+}
+
+Vector2D Vector2D::operator-(Force2D& force) const
+{
+    return { x - force.force_vec.x, y - force.force_vec.y };
+}
+
+Vector2D Vector2D::operator-=(const float rhs)
+{
+    this->x -= rhs;
+    this->y -= rhs;
+    return *this;
 }
 
 Vector2D Vector2D::operator-=(const Vector2D& rhs)
@@ -67,10 +109,10 @@ Vector2D Vector2D::operator-=(const Vector2D& rhs)
     return *this;
 }
 
-Vector2D Vector2D::operator-=(const float rhs)
+Vector2D Vector2D::operator-=(const Force2D& force)
 {
-    this->x -= rhs;
-    this->y -= rhs;
+    x += force.force_vec.x;
+    y += force.force_vec.y;
     return *this;
 }
 

@@ -146,6 +146,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Utilities\Force2D.cpp" />
     <ClCompile Include="Utilities\Struct.cpp" />
     <ClCompile Include="Utilities\Vector2D.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Utilities\Force2D.h" />
     <ClInclude Include="Utilities\Struct.h" />
     <ClInclude Include="Utilities\Vector2D.h" />
   </ItemGroup>

@@ -4,14 +4,10 @@
 #include "Bullet.h"
 #include "Utilities/Vector2D.h"
 
-class Player : public GameObject
+class Player : public PhysicalGameObject
 {
     Vector2D aim_pos_vec;
-    Vector2D position_vec;
-    Vector2D velocity_vec;
-    Vector2D force_vec;
     float friction_coef;
-    float force_gain; // the increase in power
     float terminal_velocity;
     float rotation_deg;
     
