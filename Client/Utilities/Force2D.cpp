@@ -69,6 +69,16 @@ Force2D& Force2D::Update()
     return *this;
 }
 
+void Force2D::activate()
+{
+    is_active = true;
+}
+
+void Force2D::deactivate()
+{
+    is_active = false;
+}
+
 bool Force2D::operator==(const Force2D& rhs) const
 {
     return this->force_vec == rhs.force_vec;

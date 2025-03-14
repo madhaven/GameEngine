@@ -15,24 +15,24 @@ public:
 class PhysicalGameObject : public GameObject
 {
 public:
+    // forces acting on the object
+    // as of now they correspond to up, right, down, left, recoil;
+    // TODO: dynamic list of forces
+    Force2D forces[5] = {Force2D(), Force2D(), Force2D(), Force2D(), Force2D()};
     Vector2D position, velocity, net_force;
-
-    // forces acting on x, y and z(rotational) planes
-    Force2D forces[5] = {Force2D(), Force2D(), Force2D()};
     
     virtual ~PhysicalGameObject() = default;
-    virtual void UpdateNetForce();
     PhysicalGameObject& UpdateVectors();
 };
 
-inline void PhysicalGameObject::UpdateNetForce()
-{
-}
-
 inline PhysicalGameObject& PhysicalGameObject::UpdateVectors()
 {
-    UpdateNetForce();
-    velocity += net_force;
-    position += velocity;
+    net_force.x = net_force.y = 0;
+    for (auto& force : forces)
+    {
+        force.Update();
+        net_force += force;
+    }
+    
     return *this;
 }

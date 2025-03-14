@@ -4,8 +4,8 @@
 class Force2D
 {
     int life;
-public:
     bool is_active;
+public:
     Vector2D unit_vector;
     Vector2D force_vec;
     
@@ -25,6 +25,8 @@ public:
     Force2D(Vector2D vector, float attack, float gain, float release);
     Force2D(Vector2D directionVector, float magnitude, float attack, float gain, float release);
     Force2D& Update();
+    void activate();
+    void deactivate();
 
     // operators
     bool operator!=(const Force2D& rhs) const;
