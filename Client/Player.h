@@ -34,7 +34,7 @@ public:
 
     void ResetBullets();
 
-    void WriteStats(Graphics* graphics);
+    void WriteStats(Graphics* graphics) const;
 
     void EnforceBoundaries();
 };

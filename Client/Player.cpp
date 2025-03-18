@@ -12,6 +12,7 @@ constexpr int DIR_UP = 0;
 constexpr int DIR_RIGHT = 1;
 constexpr int DIR_DOWN = 2;
 constexpr int DIR_LEFT = 3;
+constexpr int FIRE_RECOIL = 4;
 
 Player::Player()
 {
@@ -24,7 +25,7 @@ Player::Player()
     playable_area_ = {};
     
     float mag = 1.f, att = .0f, gai = .08f, rel = .0f;
-    forces[DIR_UP] = Force2D({0, -1}, mag, att, gai, rel);
+    forces[DIR_UP] = Force2D{{0, -1}, mag, att, gai, rel};
     forces[DIR_RIGHT] = Force2D({1, 0}, mag, att, gai, rel);
     forces[DIR_DOWN] = Force2D({0, 1}, mag, att, gai, rel);
     forces[DIR_LEFT] = Force2D({-1, 0}, mag, att, gai, rel);
@@ -56,6 +57,9 @@ void Player::Render(Graphics* graphics)
 
 void Player::Fire()
 {
+    auto recoil_direction = (position - aim_pos_vec).normalize();
+    forces[FIRE_RECOIL] = Force2D(recoil_direction, .1f, .0f, .0f, .0f, 4);
+    forces[FIRE_RECOIL].activate();
     trigger_released_ = FALSE;
     Bullet bullet = Bullet(playable_area_, position, aim_pos_vec);
     GetNextBullet(bullet);
@@ -84,7 +88,7 @@ bool Player::GetNextBullet(const Bullet& bullet)
 
 void Player::OnWinEvent(const UINT msg, const WPARAM w_param, const LPARAM l_param)
 {
-    switch (msg)
+    switch (msg) // is if cases better to improve multiple events ?
     {
     case WM_MOUSEMOVE:
         aim_pos_vec = Vector2D(GET_X_LPARAM(l_param), GET_Y_LPARAM(l_param));
@@ -94,6 +98,7 @@ void Player::OnWinEvent(const UINT msg, const WPARAM w_param, const LPARAM l_par
         break;
     case WM_LBUTTONUP:
         trigger_released_ = true;
+        forces[FIRE_RECOIL].deactivate();
         break;
     case WM_KEYDOWN:
         if (w_param == VK_SPACE && trigger_released_) { Fire(); }
@@ -107,7 +112,11 @@ void Player::OnWinEvent(const UINT msg, const WPARAM w_param, const LPARAM l_par
         }
         break;
     case WM_KEYUP:
-        if (w_param == VK_SPACE) { trigger_released_ = TRUE; }
+        if (w_param == VK_SPACE)
+        {
+            trigger_released_ = TRUE;
+            forces[FIRE_RECOIL].deactivate();
+        }
         if (w_param == VK_UP || w_param == 0x57) { forces[DIR_UP].deactivate(); }
         if (w_param == VK_DOWN || w_param == 0x53) { forces[DIR_DOWN].deactivate(); }
         if (w_param == VK_RIGHT || w_param == 0x44) { forces[DIR_RIGHT].deactivate(); }
@@ -157,7 +166,7 @@ void Player::Update()
     for (auto& bullet : bullets) { bullet.Update(); }
 }
 
-void Player::WriteStats(Graphics* graphics)
+void Player::WriteStats(Graphics* graphics) const
 {
     D2D1_RECT_F rect = { 10, 100, 200, 50 };
     graphics->WriteText(L"pos.x:" + std::to_wstring(position.x), rect);

@@ -56,7 +56,7 @@ Vector2D Vector2D::operator+(const Vector2D& rhs) const
 
 Vector2D Vector2D::operator+(Force2D& force) const
 {
-    return { x + force.force_vec.x, y + force.force_vec.y };
+    return { x + force.force.x, y + force.force.y };
 }
 
 Vector2D Vector2D::operator+=(const float rhs)
@@ -75,8 +75,8 @@ Vector2D Vector2D::operator+=(const Vector2D& rhs)
 
 Vector2D Vector2D::operator+=(const Force2D& force)
 {
-    x += force.force_vec.x;
-    y += force.force_vec.y;
+    x += force.force.x;
+    y += force.force.y;
     return *this;
 }
 
@@ -92,7 +92,7 @@ Vector2D Vector2D::operator-(const Vector2D& rhs) const
 
 Vector2D Vector2D::operator-(Force2D& force) const
 {
-    return { x - force.force_vec.x, y - force.force_vec.y };
+    return { x - force.force.x, y - force.force.y };
 }
 
 Vector2D Vector2D::operator-=(const float rhs)
@@ -111,8 +111,8 @@ Vector2D Vector2D::operator-=(const Vector2D& rhs)
 
 Vector2D Vector2D::operator-=(const Force2D& force)
 {
-    x += force.force_vec.x;
-    y += force.force_vec.y;
+    x += force.force.x;
+    y += force.force.y;
     return *this;
 }
 

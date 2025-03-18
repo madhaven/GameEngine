@@ -3,11 +3,27 @@
 
 class Force2D
 {
+    /*
+     * The force is an object that represents A FORCE.
+     * The force object in its core is a vector that represents the effect the object has.
+     * The other parameters specify the update behavior.
+     * The reason for these controls is to shift the game physics from an On-Off mechanism to something that feels alive.
+     * 
+     * Force object has an activate and deactivate method to set it in action and set it off.
+     * It also has a max_life which says how long it will be alive for.
+     * Being active means the force has an effect. Even if it is inactive, there could be a residual "release" effect.
+     * Being dead means no behavior is applicable anyhow.
+     *
+     * active          magnitude          inactive             dead
+     *   |-----------------|------------------|------------------|
+     *         +attack           +gain              -release
+     */
+    
     int life;
     bool is_active;
 public:
-    Vector2D unit_vector;
-    Vector2D force_vec;
+    Vector2D direction;
+    Vector2D force;
     
     // the amount of increase in force until full power is achieved
     float attack;
@@ -21,9 +37,11 @@ public:
     // the amount of decrease in force after release of force
     float release;
 
+    // kill the force after max_life
+    int max_life;
+
     Force2D();
-    Force2D(Vector2D vector, float attack, float gain, float release);
-    Force2D(Vector2D directionVector, float magnitude, float attack, float gain, float release);
+    Force2D(Vector2D direction_vector, float magnitude, float attack=.0f, float gain=.0f, float release=.0f, int max_life=0);
     Force2D& Update();
     void activate();
     void deactivate();
