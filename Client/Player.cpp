@@ -24,7 +24,7 @@ Player::Player()
     color_ = D2D1::ColorF(0.0f, 1.0f, 1.0f);
     playable_area_ = {};
     
-    float mag = 1.f, att = .0f, gai = .08f, rel = .0f;
+    float mag = 1.f, att = .0f, gai = .05f, rel = .0f;
     forces[DIR_UP] = Force2D{{0, -1}, mag, att, gai, rel};
     forces[DIR_RIGHT] = Force2D({1, 0}, mag, att, gai, rel);
     forces[DIR_DOWN] = Force2D({0, 1}, mag, att, gai, rel);
@@ -69,7 +69,7 @@ void Player::ResetBullets()
 {
     for (auto& bullet : bullets)
     {
-        bullet.isAlive = FALSE;
+        bullet.isAlive = FALSE; 
     }
 }
 
