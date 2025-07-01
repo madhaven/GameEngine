@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <windows.h>
 #include "Bullet.h"
 #include "Utilities/Vector2D.h"
@@ -14,6 +15,8 @@ class Player : public PhysicalGameObject
     D2D1_COLOR_F color_;
     bool trigger_released_;
     RECT playable_area_;
+
+	std::vector<float> veloVector;
 
 public:
     Bullet bullets[5];
